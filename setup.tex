@@ -1,0 +1,118 @@
+%
+\tolerance=1000
+%\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+%\renewcommand{\raggedright}{\leftskip=0pt \rightskip=0pt plus 0cm}
+%\newcommand{\jus}{\justifying}
+%\apptocmd{\frame}{}{\justifying}{}
+%\apptocmd{\block}{}{\justifying}{}
+%\apptocmd{\column}{}{\justifying}{}
+\hypersetup{colorlinks,citecolor=verde,linkcolor=orange,urlcolor=verde}
+%=============================
+\usetheme[sectionpage=none, subsectionpage=progressbar]{metropolis}
+\usepgfplotslibrary{dateplot}
+\useoutertheme[subsection=false,footline=authortitle]{miniframes}
+\setbeamertemplate{footline}[frame number]%Numerando as Páginas
+\hypersetup{pdfpagemode=FullScreen}%Visualizar em Tela cheia
+\hypersetup{pdfpagelayout=SinglePage}%Layout da pagina
+%\providecommand{\sin}{} \renewcommand{\sin}{\hspace{2pt}\textrm{sen}}
+%\providecommand{\tan}{} \renewcommand{\tan}{\hspace{2pt}\textrm{tg}}
+\setbeamerfont{section in toc}{size=\small}
+\setbeamerfont{subsection in toc}{size=\scriptsize}%\footnotesize
+\setbeamerfont{subsubsection in toc}{size=\scriptsize}
+\AtBeginEnvironment{minted}{\renewcommand{\fcolorbox}[4][]{#4}}
+\AtBeginSection[]{
+    \begin{frame}<beamer>
+        \frametitle{}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+\definecolor{verde}{HTML}{008069}
+\definecolor{verdepastel}{HTML}{d8f3dc}
+\definecolor{verdesolution}{HTML}{beff9e}
+\definecolor{vsplbggray}{HTML}{f4f8ff}
+% %-----------------------------------------------
+\setbeamercolor{alerted text}{fg=orange}
+\setbeamercolor*{palette primary}{fg=verde!60!black,bg=gray!30!white}
+\setbeamercolor*{palette tertiary}{bg=verde!90,fg=white}
+\setbeamercolor*{palette quaternary}{fg=verde,bg=gray!5!white}
+\setbeamercolor*{sidebar}{fg=black,bg=black}
+\setbeamercolor{progress bar}{fg=verde}%Linha q passa as seções
+\setbeamercolor*{titlelike}{parent=palette primary}
+\setbeamercolor{titlelike}{parent=palette primary,fg=verde}
+\setbeamercolor{frametitle}{bg=verdepastel,fg=verde}
+\setbeamercolor{frametitle right}{bg=black}
+\setbeamercolor{background canvas}{bg=white}
+%
+\setbeamertemplate{blocks}[rounded][shadow]
+%
+\definecolor{vblock}{HTML}{E30022}
+\BeforeBeginEnvironment{problem}{
+\setbeamercolor{block title}{fg=vblock,bg=red!30!white}
+\setbeamercolor{block body}{fg=vblock, bg=red!15!white}
+}
+\AfterEndEnvironment{problem}{
+\setbeamertemplate{itemize subitems}[circle]
+\setbeamercolor{blocktitle}{
+    use=structure,fg=structure.fg,bg=structure.fg!20!bg
+}
+\setbeamercolor{block body}{
+    parent=normal text,use=block title,bg=block
+    title.bg!50!bg, fg=black}
+}
+%
+\BeforeBeginEnvironment{solution}{%
+    \setbeamercolor{block title}{fg=verde,bg=verdesolution}
+    \setbeamercolor{block body}{fg=verde, bg=green!5!white}
+}
+\AfterEndEnvironment{solution}{
+ \setbeamercolor{block title}{
+    use=structure,
+    fg=structure.fg,
+    bg=structure.fg!20!bg
+}
+    \setbeamercolor{block body}{
+        parent=normal text,
+        use=block title,
+        bg=blocktitle.bg!50!bg,
+        fg=black
+    }
+}
+\setbeamercolor{block title example}{
+    use=example text,
+    fg=example text.fg,
+    bg=example text.fg!50!bg
+}
+\setbeamercolor{block body example}{
+    parent=normal text,
+    use=block title example,
+    bg=block title example.bg!50!bg
+}
+\tcbuselibrary{skins, breakable}
+%
+\newtcolorbox{greenbox}[1]{%
+        colback = green!5!white,
+        colframe = green!55!black,
+        fonttitle = \bfseries,
+        title = #1
+}
+\newtcolorbox{bluebox}[1]{%
+        colback = blue!5!white,
+        colframe = blue!55!black,
+        fonttitle = \bfseries,
+        title = #1
+}
+%
+\newtcolorbox{graybox}[1]{%
+        colback = gray!5!white,
+        colframe = gray!55!black,
+        fonttitle = \bfseries,
+        title = #1
+}
+%
+\newtcolorbox{yellowbox}[1]{%
+        colback = yellow!5!white,
+        colframe = yellow!55!black,
+        fonttitle = \bfseries,
+        title = #1
+}
+\graphicspath{{./images}}

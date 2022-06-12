@@ -1,0 +1,163 @@
+\begin{frame}{Nonstandard Finite Differences: Dynamic consistency}
+    We study the evolution of SEIR - mitigation model between
+    deliveries.
+
+    Consider for each time sub-interval $k$  a grid time $N_k$ partition of
+    sub interval $[t_{*}^{(k)},t^{*(k)}].$
+    $$
+        h_k:= \frac{t^{*(k)} - t_{*}^{(k)}}{N_k}.
+    $$
+    If $t_n^{(k)}$ denotes the time of the $n$ step SEIR model for the
+    $k$ sub interval, then
+    $$
+        t_n^{(k)} =
+            n h_k \in [t_{*}^{(k)},t^{*(k)}],
+            \qquad k = 1,\dots,
+            K.
+    $$
+    Also, we use an adaptive functional discretization
+    \begin{align*}
+        \varphi(h) &:= h +  \mathcal{O}(h^2)
+        \\
+        \varphi(h) &= \frac{1-\exp(-h)}{h}
+    \end{align*}
+\end{frame}
+%----------------------------------------------------------------------
+\begin{frame}{}
+    \begin{textblock*}{120mm}(0mm,20mm)
+            \begin{align*}
+                \frac{S^{n+1} - S^n}{\varphi(h)}
+                    &= \mu \widehat{N}^n
+                    - (\lambda_f + \varphi_V^{(k)}) S^{n+1}
+                    - \mu S^n + \omega_V V^n + \delta_R R^n
+                    \\
+                S^{n+1} &=
+                    \varphi(h)[
+                        \mu \widehat{N}^n
+                        - (\lambda_f +  \varphi_V^{(k)}) S^{n+1}
+                        - \mu S^n + \omega_V V^n + \delta_R R^n
+                    ] + S^n
+                    \\
+                S^{n+1} &=
+                    \frac{
+                        (1-\varphi(h) \mu) S^n
+                        + \varphi(h)\mu \widehat{N}^n
+                        + \varphi(h)[
+                            \omega_V V^n
+                            + \delta_R R^n
+                        ]}{
+                                (1 + \varphi(h))
+                                (\lambda_f + \Psi_V^{(k)})
+                    }
+            \end{align*}
+    \end{textblock*}
+\end{frame}
+%
+% %
+\begin{frame}{Discrete Model}
+    \begin{textblock*}{120mm}(0mm,20mm)
+     \begin{align*}
+        S^{n+1} &=
+            \frac{
+                (1-\varphi(h) \mu) S^n
+                + \varphi(h)\mu \widehat{N}^n
+                + \varphi(h)[
+                    \omega_V V^n
+                    + \delta_R R^n
+                ]}{
+                        (1 + \varphi(h))
+                        (\lambda_f + \Psi_V^{(k)})
+            }
+         \\
+         E^{n+1}
+             &=
+             \frac{
+                 (1- \mu \varphi(h)) E^n
+                 + \varphi(h) \lambda_f
+                 [
+                     S^{n+1} + (1- \epsilon) V^n
+                 ]
+             }{
+                 (1 + \varphi(h)
+                 \delta_E)
+             }
+         \\
+     I_S^{n+1}
+     &=
+         \frac{
+             (1 -\varphi(h) \mu) I_S^n
+             + \varphi(h) p \delta_E E^{n+1}
+         }{
+             1 + \varphi(h) \alpha_S
+         }
+      \\
+      &\vdots
+      \\
+      V^{n+1} &= V^n(1-\varphi(h)[(1 - \epsilon )\lambda_f + \mu + \omega _V]) +
+           \varphi(h)(\psi_V^{(k)}) S^{n+1}
+      \\
+      \\
+      X_{vac}^{n+1} &=
+               \varphi(h) \psi_V^{(k)}
+               (S^n + E^n + I_A^n + R^n)
+               + X_{vac}^n
+      \\
+            K^{n+1} &=
+                \max \{0, K^n - (X_{vac}^{n+1} - X_k^0 -L)\}
+     \end{align*}
+    \end{textblock*}
+\end{frame}
+
+\begin{frame}{The disability-adjusted life year (DALY)}
+    \begin{textblock*}{120mm}(5mm,0mm)
+        %
+        \begin{graybox}{{$DALY(c,s,a,t) = YLL(c,s,a,t) + YLD(c,s,a,t)$}}
+        \only<1-3>{
+            For given cause c, age a, sex s and year t
+            \begin{description}
+                \item[$YLL:$] Years of life lost due to premature death.
+                    $$
+                        YLL(c,s,a,t) = N(c,s,a,t) \times L(s,a)
+                    $$
+                    \begin{itemize}
+                         \item
+                             $N(c,s,a,t):$ is the number of
+                             deaths due to the cause $c$
+                         \item
+                             $L(s,a):$ is a standard loss
+                             function specifying years of life lost
+                    \end{itemize}
+                 \item[$YLD:$] Years of life list due to disability
+                     $$
+                         YLD(c,s,a,t) = I(c,s,a,t) \times DW(c,s,a)
+                         \times L(c,s,a,t)
+                     $$
+                    \begin{itemize}
+                        \item
+                            $I(c,s,a,t):$ number of incident cases for cause c
+                        \item
+                            $DW(c,s,a):$ disability weight for cause c
+                        \item
+                            $L(c,s,a,t):$  average duration of the case
+                    \end{itemize}
+            \end{description}
+       }
+       \end{graybox}
+    \end{textblock*}
+    \end{frame}
+\begin{frame}{}
+           \begin{equation*}
+                \begin{aligned}
+                 & \only<1->{\min_{a_V  \in \mathcal{U}[0, T]}}
+                 J(a_t) :=
+                 \only<3->{
+                    \underbrace{a_D ( D(T) - D(0))}_{:=YLL}  +
+                    \underbrace{a_S (Y_{I_S}(T) - Y_{I_S}(0))}_{:=YLD}
+                 }
+                 \\
+                 a_t &:= p_k \Psi^k,
+                 \\
+                 s.t. & \{\text{Stock constrains}\}
+                \end{aligned}
+           \end{equation*}
+\end{frame}
